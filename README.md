@@ -5,3 +5,4 @@ A Stereo WBFM transmitter based on GNU Radio for test propose .
 2. The defult sample rate is 8M and the baseband bandwith is 300khz.
 3. This program will extract the audio signal from a 48 kHz, 16-bit stereo WAV file.
 4. The program not only transmit audio but also transmit RDS infomation , the defult text is "TX TEST".
+([example]/01.png))
