@@ -1,0 +1,1427 @@
+{
+  "options": {
+    "parameters": {
+      "author": "",
+      "catch_exceptions": "True",
+      "category": "[GRC Hier Blocks]",
+      "cmake_opt": "",
+      "comment": "Stereo MPX transmitter; GNU Radio 3.10 / Ubuntu.",
+      "copyright": "",
+      "description": "Stereo audio + PS/RadioText TX Test, stock GNU Radio 3.10 blocks",
+      "gen_cmake": "On",
+      "gen_linking": "dynamic",
+      "generate_options": "qt_gui",
+      "hier_block_src_path": ".:",
+      "id": "wbfm_stereo_usrp_8m_rds",
+      "max_nouts": "0",
+      "output_language": "python",
+      "placement": "(0,0)",
+      "qt_qss_theme": "",
+      "realtime_scheduling": "",
+      "run": "True",
+      "run_command": "{python} -u {filename}",
+      "run_options": "prompt",
+      "sizing_mode": "fixed",
+      "thread_safe_setters": "",
+      "title": "Stereo WBFM + RDS TX Test - USRP 8 MSps",
+      "window_size": "(1200,850)"
+    },
+    "states": {
+      "bus_sink": false,
+      "bus_source": false,
+      "bus_structure": null,
+      "coordinate": [
+        16,
+        16
+      ],
+      "rotation": 0,
+      "state": "enabled"
+    }
+  },
+  "blocks": [
+    {
+      "name": "import_math",
+      "id": "import",
+      "parameters": {
+        "imports": "import math"
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          16,
+          184
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "audio_rate",
+      "id": "variable",
+      "parameters": {
+        "value": "48000",
+        "comment": "Input WAV must be 48 kHz stereo PCM."
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          320,
+          16
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "mpx_rate",
+      "id": "variable",
+      "parameters": {
+        "value": "384000",
+        "comment": "MPX and Frequency Mod sample rate."
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          528,
+          16
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "rf_rate",
+      "id": "variable",
+      "parameters": {
+        "value": "8000000",
+        "comment": "Requested USRP sample rate; verify actual hardware rate."
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          736,
+          16
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "center_freq",
+      "id": "variable",
+      "parameters": {
+        "value": "109400000",
+        "comment": "RF center frequency, Hz."
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          944,
+          16
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "rf_bandwidth",
+      "id": "variable",
+      "parameters": {
+        "value": "300000",
+        "comment": "Requested USRP analog bandwidth, Hz; device dependent."
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          1152,
+          16
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "max_deviation",
+      "id": "variable",
+      "parameters": {
+        "value": "75000",
+        "comment": "Hz at MPX amplitude 1."
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          1360,
+          16
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "preemph_tau",
+      "id": "variable",
+      "parameters": {
+        "value": "50e-6",
+        "comment": "Use matching receiver deemphasis."
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          1568,
+          16
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "audio_gain",
+      "id": "variable_qtgui_range",
+      "parameters": {
+        "value": "0.5",
+        "label": "Audio gain (watch MPX peaks)",
+        "rangeType": "float",
+        "start": "0.0",
+        "stop": "2.0",
+        "step": "0.01",
+        "widget": "counter_slider",
+        "orient": "QtCore.Qt.Horizontal",
+        "min_len": "400",
+        "gui_hint": "0,0,1,1",
+        "comment": "Common L/R gain after preemphasis; monitor MPX peaks."
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          256,
+          976
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "pilot_level",
+      "id": "variable",
+      "parameters": {
+        "value": "0.1",
+        "comment": "19 kHz pilot amplitude."
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          528,
+          112
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "iq_amplitude",
+      "id": "variable",
+      "parameters": {
+        "value": "0.3",
+        "comment": "Complex amplitude scaling; does not set FM deviation."
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          736,
+          112
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "tx_gain",
+      "id": "variable",
+      "parameters": {
+        "value": "0",
+        "comment": "USRP gain in dB; actual allowed range is device dependent."
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          944,
+          112
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "device_args",
+      "id": "variable",
+      "parameters": {
+        "value": "''",
+        "comment": "Empty selects the first available USRP; set serial=... or addr=..."
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          1152,
+          112
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "wav_path",
+      "id": "variable",
+      "parameters": {
+        "value": "'stereo_test_48k.wav'",
+        "comment": "Relative to process working directory; absolute Ubuntu path also works."
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          1360,
+          112
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "wav_stereo",
+      "id": "blocks_wavfile_source",
+      "parameters": {
+        "file": "wav_path",
+        "repeat": "True",
+        "nchan": "2",
+        "comment": "Output 0: L. Output 1: R. 48 kHz / 2 channels required."
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          16,
+          352
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "preemphasis_l",
+      "id": "analog_fm_preemph",
+      "parameters": {
+        "samp_rate": "audio_rate",
+        "tau": "preemph_tau",
+        "fh": "-1.0"
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          256,
+          288
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "audio_lpf_l",
+      "id": "low_pass_filter",
+      "parameters": {
+        "type": "fir_filter_fff",
+        "decim": "1",
+        "interp": "1",
+        "gain": "1",
+        "samp_rate": "audio_rate",
+        "cutoff_freq": "14500",
+        "width": "1000",
+        "win": "window.WIN_HAMMING",
+        "beta": "6.76"
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          496,
+          288
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "audio_level_l",
+      "id": "blocks_multiply_const_vxx",
+      "parameters": {
+        "type": "float",
+        "const": "audio_gain",
+        "vlen": "1"
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          736,
+          288
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "audio_interp_l",
+      "id": "rational_resampler_xxx",
+      "parameters": {
+        "type": "fff",
+        "interp": "mpx_rate // audio_rate",
+        "decim": "1",
+        "taps": "[]",
+        "fbw": "0.4",
+        "comment": "48 kS/s -> 384 kS/s (x8)."
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          944,
+          288
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "preemphasis_r",
+      "id": "analog_fm_preemph",
+      "parameters": {
+        "samp_rate": "audio_rate",
+        "tau": "preemph_tau",
+        "fh": "-1.0"
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          256,
+          560
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "audio_lpf_r",
+      "id": "low_pass_filter",
+      "parameters": {
+        "type": "fir_filter_fff",
+        "decim": "1",
+        "interp": "1",
+        "gain": "1",
+        "samp_rate": "audio_rate",
+        "cutoff_freq": "14500",
+        "width": "1000",
+        "win": "window.WIN_HAMMING",
+        "beta": "6.76"
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          496,
+          560
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "audio_level_r",
+      "id": "blocks_multiply_const_vxx",
+      "parameters": {
+        "type": "float",
+        "const": "audio_gain",
+        "vlen": "1"
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          736,
+          560
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "audio_interp_r",
+      "id": "rational_resampler_xxx",
+      "parameters": {
+        "type": "fff",
+        "interp": "mpx_rate // audio_rate",
+        "decim": "1",
+        "taps": "[]",
+        "fbw": "0.4",
+        "comment": "48 kS/s -> 384 kS/s (x8)."
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          944,
+          560
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "sum_lr",
+      "id": "blocks_add_xx",
+      "parameters": {
+        "type": "float",
+        "num_inputs": "2",
+        "vlen": "1",
+        "comment": "L + R"
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          1200,
+          288
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "difference_lr",
+      "id": "blocks_sub_xx",
+      "parameters": {
+        "type": "float",
+        "num_inputs": "2",
+        "vlen": "1",
+        "comment": "Input 0 minus input 1 = L - R"
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          1200,
+          560
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "sum_weight",
+      "id": "blocks_multiply_const_vxx",
+      "parameters": {
+        "type": "float",
+        "const": "(1.0 - pilot_level - rds_peak_reserve) / 2.0",
+        "vlen": "1"
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          1392,
+          288
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "difference_weight",
+      "id": "blocks_multiply_const_vxx",
+      "parameters": {
+        "type": "float",
+        "const": "(1.0 - pilot_level - rds_peak_reserve) / 2.0",
+        "vlen": "1"
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          1392,
+          560
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "subcarrier_38k",
+      "id": "blocks_complex_to_imag",
+      "parameters": {
+        "vlen": "1"
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          1744,
+          960
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "stereo_dsbsc",
+      "id": "blocks_multiply_xx",
+      "parameters": {
+        "type": "float",
+        "num_inputs": "2",
+        "vlen": "1"
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          1648,
+          560
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "pilot_19k",
+      "id": "blocks_complex_to_imag",
+      "parameters": {
+        "vlen": "1"
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          1456,
+          800
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "mpx_sum",
+      "id": "blocks_add_xx",
+      "parameters": {
+        "type": "float",
+        "num_inputs": "4",
+        "vlen": "1",
+        "comment": "0.425*(L+R) + 0.425*(L-R)*sin(38k) + 0.1*sin(19k) + RDS."
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          1904,
+          416
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "fm_modulator",
+      "id": "analog_frequency_modulator_fc",
+      "parameters": {
+        "sensitivity": "2 * math.pi * max_deviation / mpx_rate",
+        "comment": "384 kS/s Float -> Complex. No additional preemphasis."
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          2128,
+          416
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "rf_resampler",
+      "id": "rational_resampler_xxx",
+      "parameters": {
+        "type": "ccf",
+        "interp": "rf_rate // math.gcd(rf_rate, mpx_rate)",
+        "decim": "mpx_rate // math.gcd(rf_rate, mpx_rate)",
+        "taps": "[]",
+        "fbw": "0.4",
+        "comment": "384000 * 125 / 6 = 8000000 samples/s."
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          2400,
+          416
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "iq_level",
+      "id": "blocks_multiply_const_vxx",
+      "parameters": {
+        "type": "complex",
+        "const": "iq_amplitude",
+        "vlen": "1"
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          2800,
+          416
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "usrp_tx",
+      "id": "uhd_usrp_sink",
+      "parameters": {
+        "type": "fc32",
+        "otw": "sc16",
+        "stream_args": "",
+        "stream_chans": "[0]",
+        "dev_addr": "device_args",
+        "dev_args": "",
+        "sync": "none",
+        "start_time": "-1.0",
+        "clock_rate": "0",
+        "num_mboards": "1",
+        "clock_source0": "",
+        "time_source0": "",
+        "sd_spec0": "",
+        "nchan": "1",
+        "samp_rate": "rf_rate",
+        "center_freq0": "center_freq",
+        "gain0": "tx_gain",
+        "gain_type0": "default",
+        "ant0": "\"TX/RX\"",
+        "bw0": "rf_bandwidth",
+        "lo_source0": "internal",
+        "lo_export0": "False",
+        "show_lo_controls": "False",
+        "len_tag_name": "",
+        "comment": "8 MS/s; 109.4 MHz; requested analog BW 300 kHz. No Throttle block."
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          3024,
+          384
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "mpx_monitor",
+      "id": "qtgui_sink_x",
+      "parameters": {
+        "type": "float",
+        "name": "'Stereo MPX - 384 kS/s'",
+        "fftsize": "4096",
+        "wintype": "window.WIN_BLACKMAN_hARRIS",
+        "fc": "0",
+        "bw": "mpx_rate",
+        "rate": "5",
+        "showrf": "False",
+        "plotfreq": "True",
+        "plotwaterfall": "False",
+        "plottime": "True",
+        "plotconst": "False",
+        "showports": "False",
+        "gui_hint": "1,0,1,1"
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          1920,
+          752
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "fm_monitor",
+      "id": "qtgui_sink_x",
+      "parameters": {
+        "type": "complex",
+        "name": "'FM IQ before RF resampling'",
+        "fftsize": "4096",
+        "wintype": "window.WIN_BLACKMAN_hARRIS",
+        "fc": "center_freq",
+        "bw": "mpx_rate",
+        "rate": "5",
+        "showrf": "True",
+        "plotfreq": "True",
+        "plotwaterfall": "False",
+        "plottime": "True",
+        "plotconst": "False",
+        "showports": "False",
+        "gui_hint": "2,0,1,1"
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          2352,
+          752
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "setup_note",
+      "id": "note",
+      "parameters": {
+        "note": "Ubuntu / GNU Radio 3.10\nOpen from the directory containing stereo_test_48k.wav, or set wav_path.\nSet device_args for your USRP and verify antenna, actual rate and bandwidth.\nMonitor MPX peaks; keep |MPX| <= 1 with headroom.\n109.4 MHz is in an aeronautical navigation band: use a cabled/shielded test setup.\nRDS PS and RadioText: TX Test; PI 0x1234 is a bench-test identifier.\nNo gr-rds package required. RDS bits and CRC are embedded in Vector Source.\nShared 19 kHz oscillator generates coherent 38/57 kHz subcarriers."
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          16,
+          1520
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "rds_sample_rate",
+      "id": "variable",
+      "parameters": {
+        "value": "19000",
+        "comment": "2375 chips/s x 8."
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          1760,
+          16
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "rds_level",
+      "id": "variable",
+      "parameters": {
+        "value": "2000.0 / max_deviation",
+        "comment": "Nominal RDS injection for the all-zero bit pattern: 2 kHz deviation."
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          1760,
+          112
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "rds_peak_reserve",
+      "id": "variable",
+      "parameters": {
+        "value": "0.05",
+        "comment": "MPX amplitude reserved for shaped RDS peaks; keep rds_level at default."
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          1984,
+          112
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "pilot_reference",
+      "id": "analog_sig_source_x",
+      "parameters": {
+        "type": "complex",
+        "samp_rate": "mpx_rate",
+        "waveform": "analog.GR_COS_WAVE",
+        "freq": "19000",
+        "amp": "1.0",
+        "offset": "0",
+        "phase": "0",
+        "showports": "False",
+        "comment": "Shared unit phasor z: Im(z), Im(z^2), Im(z^3) give 19/38/57 kHz."
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          1184,
+          800
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "harmonic_38k",
+      "id": "blocks_multiply_xx",
+      "parameters": {
+        "type": "complex",
+        "num_inputs": "2",
+        "vlen": "1"
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          1456,
+          960
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "harmonic_57k",
+      "id": "blocks_multiply_xx",
+      "parameters": {
+        "type": "complex",
+        "num_inputs": "2",
+        "vlen": "1"
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          1456,
+          1120
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "subcarrier_57k",
+      "id": "blocks_complex_to_imag",
+      "parameters": {
+        "vlen": "1"
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          1744,
+          1120
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "pilot_weight",
+      "id": "blocks_multiply_const_vxx",
+      "parameters": {
+        "type": "float",
+        "const": "pilot_level",
+        "vlen": "1"
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          1744,
+          800
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "rds_bits",
+      "id": "blocks_vector_source_x",
+      "parameters": {
+        "type": "byte",
+        "vector": "[0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0]",
+        "repeat": "True",
+        "vlen": "1",
+        "tags": "[]",
+        "comment": "PS=TX Test (8 chars padded); RT=TX Test + CR; PI=0x1234. Groups 0B/2A with CRC."
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          16,
+          1312
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "rds_differential",
+      "id": "digital_diff_encoder_bb",
+      "parameters": {
+        "modulus": "2",
+        "coding": "digital.DIFF_DIFFERENTIAL"
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          368,
+          1312
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "rds_biphase",
+      "id": "digital_chunks_to_symbols_xx",
+      "parameters": {
+        "in_type": "byte",
+        "out_type": "float",
+        "num_ports": "1",
+        "symbol_table": "[-1.0, 1.0, 1.0, -1.0]",
+        "dimension": "2",
+        "comment": "Bit 0 -> (-1,+1), bit 1 -> (+1,-1); 2375 chips/s."
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          624,
+          1312
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "rds_pulse_shaping",
+      "id": "root_raised_cosine_filter",
+      "parameters": {
+        "type": "interp_fir_filter_fff",
+        "interp": "8",
+        "decim": "1",
+        "gain": "8.0 / math.sqrt(2.0)",
+        "samp_rate": "rds_sample_rate",
+        "sym_rate": "2375",
+        "alpha": "1.0",
+        "ntaps": "129",
+        "comment": "16 samples per RDS bit; normalized for nominal all-zero-pattern amplitude 1."
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          976,
+          1280
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "rds_resampler",
+      "id": "rational_resampler_xxx",
+      "parameters": {
+        "type": "fff",
+        "interp": "mpx_rate // math.gcd(mpx_rate, rds_sample_rate)",
+        "decim": "rds_sample_rate // math.gcd(mpx_rate, rds_sample_rate)",
+        "taps": "[]",
+        "fbw": "0.4",
+        "comment": "19000 * 384 / 19 = 384000 samples/s."
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          1280,
+          1312
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "rds_weight",
+      "id": "blocks_multiply_const_vxx",
+      "parameters": {
+        "type": "float",
+        "const": "rds_level",
+        "vlen": "1"
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          1712,
+          1328
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    },
+    {
+      "name": "rds_dsbsc",
+      "id": "blocks_multiply_xx",
+      "parameters": {
+        "type": "float",
+        "num_inputs": "2",
+        "vlen": "1",
+        "comment": "57 kHz suppressed-carrier RDS."
+      },
+      "states": {
+        "bus_sink": false,
+        "bus_source": false,
+        "bus_structure": null,
+        "coordinate": [
+          2080,
+          1312
+        ],
+        "rotation": 0,
+        "state": "enabled"
+      }
+    }
+  ],
+  "connections": [
+    [
+      "wav_stereo",
+      "0",
+      "preemphasis_l",
+      "0"
+    ],
+    [
+      "preemphasis_l",
+      "0",
+      "audio_lpf_l",
+      "0"
+    ],
+    [
+      "audio_lpf_l",
+      "0",
+      "audio_level_l",
+      "0"
+    ],
+    [
+      "audio_level_l",
+      "0",
+      "audio_interp_l",
+      "0"
+    ],
+    [
+      "wav_stereo",
+      "1",
+      "preemphasis_r",
+      "0"
+    ],
+    [
+      "preemphasis_r",
+      "0",
+      "audio_lpf_r",
+      "0"
+    ],
+    [
+      "audio_lpf_r",
+      "0",
+      "audio_level_r",
+      "0"
+    ],
+    [
+      "audio_level_r",
+      "0",
+      "audio_interp_r",
+      "0"
+    ],
+    [
+      "audio_interp_l",
+      "0",
+      "sum_lr",
+      "0"
+    ],
+    [
+      "audio_interp_r",
+      "0",
+      "sum_lr",
+      "1"
+    ],
+    [
+      "audio_interp_l",
+      "0",
+      "difference_lr",
+      "0"
+    ],
+    [
+      "audio_interp_r",
+      "0",
+      "difference_lr",
+      "1"
+    ],
+    [
+      "sum_lr",
+      "0",
+      "sum_weight",
+      "0"
+    ],
+    [
+      "difference_lr",
+      "0",
+      "difference_weight",
+      "0"
+    ],
+    [
+      "difference_weight",
+      "0",
+      "stereo_dsbsc",
+      "0"
+    ],
+    [
+      "subcarrier_38k",
+      "0",
+      "stereo_dsbsc",
+      "1"
+    ],
+    [
+      "sum_weight",
+      "0",
+      "mpx_sum",
+      "0"
+    ],
+    [
+      "stereo_dsbsc",
+      "0",
+      "mpx_sum",
+      "1"
+    ],
+    [
+      "mpx_sum",
+      "0",
+      "fm_modulator",
+      "0"
+    ],
+    [
+      "fm_modulator",
+      "0",
+      "rf_resampler",
+      "0"
+    ],
+    [
+      "rf_resampler",
+      "0",
+      "iq_level",
+      "0"
+    ],
+    [
+      "iq_level",
+      "0",
+      "usrp_tx",
+      "0"
+    ],
+    [
+      "mpx_sum",
+      "0",
+      "mpx_monitor",
+      "0"
+    ],
+    [
+      "fm_modulator",
+      "0",
+      "fm_monitor",
+      "0"
+    ],
+    [
+      "pilot_reference",
+      "0",
+      "pilot_19k",
+      "0"
+    ],
+    [
+      "pilot_19k",
+      "0",
+      "pilot_weight",
+      "0"
+    ],
+    [
+      "pilot_weight",
+      "0",
+      "mpx_sum",
+      "2"
+    ],
+    [
+      "pilot_reference",
+      "0",
+      "harmonic_38k",
+      "0"
+    ],
+    [
+      "pilot_reference",
+      "0",
+      "harmonic_38k",
+      "1"
+    ],
+    [
+      "harmonic_38k",
+      "0",
+      "subcarrier_38k",
+      "0"
+    ],
+    [
+      "harmonic_38k",
+      "0",
+      "harmonic_57k",
+      "0"
+    ],
+    [
+      "pilot_reference",
+      "0",
+      "harmonic_57k",
+      "1"
+    ],
+    [
+      "harmonic_57k",
+      "0",
+      "subcarrier_57k",
+      "0"
+    ],
+    [
+      "rds_bits",
+      "0",
+      "rds_differential",
+      "0"
+    ],
+    [
+      "rds_differential",
+      "0",
+      "rds_biphase",
+      "0"
+    ],
+    [
+      "rds_biphase",
+      "0",
+      "rds_pulse_shaping",
+      "0"
+    ],
+    [
+      "rds_pulse_shaping",
+      "0",
+      "rds_resampler",
+      "0"
+    ],
+    [
+      "rds_resampler",
+      "0",
+      "rds_weight",
+      "0"
+    ],
+    [
+      "rds_weight",
+      "0",
+      "rds_dsbsc",
+      "0"
+    ],
+    [
+      "subcarrier_57k",
+      "0",
+      "rds_dsbsc",
+      "1"
+    ],
+    [
+      "rds_dsbsc",
+      "0",
+      "mpx_sum",
+      "3"
+    ]
+  ],
+  "metadata": {
+    "file_format": 1,
+    "grc_version": "3.10.10.0"
+  }
+}
